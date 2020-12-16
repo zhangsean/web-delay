@@ -15,6 +15,9 @@ Visit `http://localhost:8080/?ms=10` to simulate a delay of 10 ms in every reque
 ## Go build
 
 ```sh
+cd ~/go/src
+git clone https://github.com/zhangsean/web-delay.git
+cd web-delay
 go build
 # Please make sure local port 80 is free.
 ./web-delay
