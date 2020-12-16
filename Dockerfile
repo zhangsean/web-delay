@@ -1,9 +1,9 @@
 FROM golang:alpine AS build
 COPY . src/
 RUN cd src \
- && go build
+ && CGO_ENABLED=0 go build -ldflags="-s -w"
 
-FROM alpine
+FROM scratch
 LABEL maintainer="zhangsean <zxf2342@qq.com>"
 COPY --from=build /go/src/web-delay /web-delay
 EXPOSE 80
