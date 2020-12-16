@@ -23,6 +23,7 @@ func main() {
 				}
 				maxi = tmp
 			}
+			rand.Seed(time.Now().UnixNano())
 			msi = rand.Intn(maxi)
 		} else {
 			tmp, err := strconv.Atoi(ms)
