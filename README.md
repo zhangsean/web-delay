@@ -16,7 +16,8 @@ Visit `http://localhost:8080/?ms=10` to simulate a delay of 10 ms in every reque
 
 ```sh
 go build
-./delay
+# Please make sure local port 80 is free.
+./web-delay
 ```
 
 Visit `http://localhost/?ms=100` to simulate a delay of 100 ms in every request.
