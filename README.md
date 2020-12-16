@@ -10,7 +10,9 @@ Web delay simulation powered by go.
 docker run -itd --name web-delay -p 8080:80 zhangsean/web-delay
 ```
 
-Visit `http://localhost:8080/?ms=10` to simulate a delay of 10 ms in every request.
+* Visit `http://localhost:8080/` to simulate a delay of random time from 0 to 1000 ms in every request.
+* Visit `http://localhost:8080/?max=100` to simulate a delay of random time from 0 to 100 ms in every request.
+* Visit `http://localhost:8080/?ms=10` to simulate a delay of 10 ms in every request.
 
 ## Go build
 
