@@ -10,12 +10,12 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		pars := r.URL.Query()
-		ms := pars.Get("ms")
+		query := r.URL.Query()
+		ms := query.Get("ms")
 		msi := 0
 		if ms == "" {
 			maxi := 1000
-			max := pars.Get("max")
+			max := query.Get("max")
 			if max != "" {
 				tmp, err := strconv.Atoi(max)
 				if err != nil {
@@ -35,7 +35,11 @@ func main() {
 		if msi > 0 {
 			time.Sleep(time.Duration(msi) * time.Millisecond)
 		}
-		w.Write([]byte(fmt.Sprintf("Hello Go, delayed by %d ms.\n", msi)))
+		text := query.Get("text")
+		if text == "" {
+			text = fmt.Sprintf("Hello Go, delayed by %d ms.\n", msi)
+		}
+		w.Write([]byte(text))
 	})
 
 	http.ListenAndServe("0.0.0.0:80", nil)
