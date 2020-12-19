@@ -153,7 +153,7 @@ func main() {
 	})
 
 	http.Handle("/", r)
-	http.ListenAndServe("0.0.0.0:808", nil)
+	http.ListenAndServe("0.0.0.0:80", nil)
 }
 
 func log(id int, msg ...interface{}) {
