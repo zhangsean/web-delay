@@ -35,9 +35,9 @@ func main() {
 		if obj, found := c.Get(cacheKey); found {
 			requests = obj.([]Request)
 		}
-		html := "<table>"
+		status := r.URL.Query().Get("status")
+		html := "<hr><table>"
 		html += "<tr><th>ID</th><th>Delay(ms)</th><th>Begin time</th><th>Done time</th></tr>"
-		done := r.URL.Query().Get("done")
 		var aCount, dCount, pCount int
 		for _, t := range requests {
 			aCount++
@@ -46,9 +46,9 @@ func main() {
 			} else {
 				dCount++
 			}
-			if done == "1" && t.end.IsZero() {
+			if status == "1" && t.end.IsZero() {
 				continue
-			} else if done == "0" && !t.end.IsZero() {
+			} else if status == "" && !t.end.IsZero() {
 				continue
 			}
 			html += "<tr>"
@@ -61,9 +61,18 @@ func main() {
 			html += "</tr>"
 		}
 		html += "</table>"
-		html = fmt.Sprintf("<a href='?done=0'>Processing requests (%d)</a>", pCount) + html
-		html = fmt.Sprintf("<a href='?done=1'>Done requests (%d)</a>&nbsp;&nbsp;&nbsp;", dCount) + html
-		html = fmt.Sprintf("<a href='?'>All requests (%d)</a>&nbsp;&nbsp;&nbsp;", aCount) + html
+		style := "style='font-weight: bold; font-style: italic;'"
+		var pStyle, dStyle, aStyle string
+		if status == "" {
+			pStyle = style
+		} else if status == "1" {
+			dStyle = style
+		} else if status == "2" {
+			aStyle = style
+		}
+		html = fmt.Sprintf("<a %s href='?'>Processing (%d)</a>", pStyle, pCount) + html
+		html = fmt.Sprintf("<a %s href='?status=1'>Done (%d)</a>&nbsp;&nbsp;&nbsp;", dStyle, dCount) + html
+		html = fmt.Sprintf("<a %s href='?status=2'>All (%d)</a>&nbsp;&nbsp;&nbsp;", aStyle, aCount) + html
 		w.Write([]byte(html))
 	})
 
