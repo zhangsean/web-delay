@@ -35,6 +35,14 @@ cd web-delay
 go build
 # Please make sure local port 80 is free.
 ./web-delay
+# Show help
+./web-delay -help
+# Usage
+Usage of ./web-delay:
+  -d    Show debug log.
+  -p int
+        Local port to listen (default 80)
+  -v    Show version.
 ```
 
 Visit `http://localhost/?ms=100` to simulate a delay of `100` ms in every request.

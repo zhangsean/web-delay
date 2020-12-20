@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -25,8 +26,22 @@ type Request struct {
 }
 
 const cacheKey string = "reqList"
+const version string = "v0.5"
+
+var port int
+var flagD, flagV bool
 
 func main() {
+	flag.IntVar(&port, "p", 80, "Local port to listen")
+	flag.BoolVar(&flagD, "d", false, "Show debug log.")
+	flag.BoolVar(&flagV, "v", false, "Show version.")
+	flag.Parse()
+
+	if flagV {
+		fmt.Println("version:", version)
+		return
+	}
+
 	c := cache.New(10*time.Minute, 10*time.Minute)
 
 	r := mux.NewRouter()
@@ -162,9 +177,11 @@ func main() {
 	})
 
 	http.Handle("/", r)
-	http.ListenAndServe("0.0.0.0:80", nil)
+	http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", port), nil)
 }
 
 func log(id int, msg ...interface{}) {
-	fmt.Println(id, time.Now().Format("2006-01-02 15:04:05.000000"), msg)
+	if flagD {
+		fmt.Println(id, time.Now().Format("2006-01-02 15:04:05.000000"), msg)
+	}
 }
