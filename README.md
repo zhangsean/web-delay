@@ -20,7 +20,7 @@ docker logs -f web-delay
 * Visit `http://localhost:8080/?ms=10` to simulate a delay of `10` ms in every request.
 * Visit `http://localhost:8080/?ms=10&text=word` to simulate a delay of `10` ms and respond with the specific text `word` in every request.
 
-> Monitor request list
+> View request list
 
 * Visit `http://localhost:8080/requests` to view all request list in processing.
 * Visit `http://localhost:8080/requests?status=1` to view all done request list.
